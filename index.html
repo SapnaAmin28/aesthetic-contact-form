@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ultimate Contact Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* Background animation */
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(270deg, #6a11cb, #2575fc, #ff512f, #dd2476);
+    background-size: 800% 800%;
+    animation: gradientBG 15s ease infinite;
+    overflow: hidden;
+  }
+  @keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  /* Floating particles */
+  .particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particles span {
+    position: absolute;
+    display: block;
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    animation: float 12s linear infinite;
+  }
+  @keyframes float {
+    0% {transform: translateY(100vh) scale(0);}
+    50% {transform: translateY(50vh) scale(1);}
+    100% {transform: translateY(-10vh) scale(0);}
+  }
+
+  /* Form container */
+  .container {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    border-radius: 20px;
+    padding: 35px 40px;
+    width: 100%;
+    max-width: 420px;
+    color: #fff;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: fadeInUp 0.8s ease;
+  }
+  @keyframes fadeInUp {
+    from {opacity: 0; transform: translateY(40px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  /* Floating label group */
+  .form-group {
+    position: relative;
+    margin-bottom: 25px;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+  input:focus, textarea:focus {
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+    transform: translateY(-1px);
+  }
+
+  label {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    color: rgba(255,255,255,0.7);
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  input:focus + label,
+  input:not(:placeholder-shown) + label,
+  textarea:focus + label,
+  textarea:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 8px;
+    font-size: 12px;
+    color: #fff;
+  }
+
+  .error-message {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-top: 3px;
+    min-height: 14px;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Submit button */
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #ff512f, #dd2476);
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  }
+
+  /* Success animation */
+  .success-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #00ff99;
+    animation: fadeIn 0.5s ease;
+  }
+  .checkmark {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    border: 2px solid #00ff99;
+    position: relative;
+    animation: scaleUp 0.4s ease;
+  }
+  .checkmark::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid #00ff99;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  @keyframes scaleUp {
+    from {transform: scale(0);}
+    to {transform: scale(1);}
+  }
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    .container {
+      padding: 25px 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="particles">
+  <!-- Multiple floating particles -->
+  <span style="left:10%; animation-delay:0s;"></span>
+  <span style="left:20%; animation-delay:2s;"></span>
+  <span style="left:40%; animation-delay:4s;"></span>
+  <span style="left:60%; animation-delay:1s;"></span>
+  <span style="left:80%; animation-delay:3s;"></span>
+</div>
+
+<div class="container">
+  <h2>Contact Us</h2>
+  <form id="contactForm" novalidate>
+    <div class="form-group">
+      <input type="text" id="name" placeholder=" " />
+      <label for="name">Name</label>
+      <div id="nameError" class="error-message"></div>
+    </div>
+    <div class="form-group">
+      <input type="email" id="email" placeholder=" " />
+      <label for="email">Email</label>
+      <div id="emailError" class="error-message"></div>
+    </div>
+    <div class="form-group">
+      <textarea id="message" rows="5" placeholder=" "></textarea>
+      <label for="message">Message</label>
+      <div id="messageError" class="error-message"></div>
+    </div>
+    <button type="submit">Send Message</button>
+    <div id="successMsg" class="success-message"></div>
+  </form>
+</div>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  const nameError = document.getElementById("nameError");
+  const emailError = document.getElementById("emailError");
+  const messageError = document.getElementById("messageError");
+  const successMsg = document.getElementById("successMsg");
+
+  const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/;
+  let isValid = true;
+
+  if (!name) {
+    nameError.textContent = "Please enter your name.";
+    isValid = false;
+  } else if (name.length < 2) {
+    nameError.textContent = "Name must be at least 2 characters.";
+    isValid = false;
+  } else {
+    nameError.textContent = "";
+  }
+
+  if (!email) {
+    emailError.textContent = "Please enter your email.";
+    isValid = false;
+  } else if (!emailRegex.test(email)) {
+    emailError.textContent = "Please enter a valid email address.";
+    isValid = false;
+  } else {
+    emailError.textContent = "";
+  }
+
+  if (!message) {
+    messageError.textContent = "Please enter y
